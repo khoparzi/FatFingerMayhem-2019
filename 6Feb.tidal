@@ -1,0 +1,39 @@
+let bassCut = 0
+
+d1
+$ stack [
+  -- rarely (fast 2) $ slice8 "[0 .. 3]" $ n 1,
+  sometimes (fast 2) $
+  (# bpf (range 700 3000 $ slowtri)) $
+  slice8 "[6 .. 7]*4" $
+  randcat[
+    n 0
+    , n (irand 8)
+  ]
+] # s "trumps"
+-- # delay 0.2 # delaytime (range (1/4) (1/16) $ slowertri) # delayfeedback 0.4 # orbit 2
+
+d2
+$ louder
+$ stack [
+  -- slice32 "[4 6]*2" $ n 3,
+  slice32 "<7 13>" $ n 3,
+  slice32 "~ 14" $ n 3
+  -- slice32 "7*8" $ n 3
+  -- slice32 "~ [~ 15]" $ n 3
+  -- slice32 "[16 17]/4" $ n 3
+] # s "funkybreaks" # hpf 100
+-- |+ hpf (range 200 3000 $ slowertri)
+
+p "bass"
+$ up "[0 3 0 4]*2" |- up 3
+# s "abstrakta:16" # end 0.5 # begin 0.01 # lpf 100
+-- |- lpf bassCut
+
+p "bass"
+$ rarely (fast 2)
+$ n "[0 [~ 0*2] 0 ~]" # s "[subs:2, jungbass:2]"
+# legato 1 # bpf 20 # up "[0 3 7 0]/8" # rel 0.4
++ up "[0, 24]"
+
+setcps(100/120/2)

@@ -1,0 +1,64 @@
+let
+    j p = jump $ p
+    j4 n p = jumpIn n 4 $ p
+    j8 n p = jumpIn n 8 $ p
+    cl4 n p = clutchIn n 4 $ p
+    cl8 n p = clutchIn n 8 $ p
+
+clutchIn "hats" $ silence
+
+-- xfadeIn "melody" 8
+p "melody"
+$ s "jp:2" # legato 1 |+ up "<3 7 9 0>" # lpf 200 # rel 1
+-- $ s "waxorgan" # legato (range 1 2 $ slowersaw) + up "[<0 3 5 7> 0]/4" # gain 1-- # hpf 300
+<| up "0 0 0 [0 [1 2]]"
+# lpf (("[200 800]*2" |* (tri)) |+ (range 400 800 $ slowsaw)) # lpq 0.2
+# room 0.8
+# orbit 1
+-- |- lpf bassCut
+
+d1
+$ rarely (const (s "<rim oneshots>*<16 32>" # end 0.02 # irand 100 # pan (shrand 765)))
+$ n "0 [~ 0] [~ 0] 0"
+-- $ n "[0 [~ 0] [~ 0] 0, 3(<3 5>,8,3)]" # pan 0.3
+-- $ n "0 [~ 0] [~ 0] [~ 0]*2"
+-- $ n "[[0 ~ ~ 0] [0 ~]*2 [~ 0 0 ~] 0]"
+-- # s "[<lt mt sd9 rim>, jukeit:3]"
+# s "lt"
+-- # s "dudak:1" # orbit 2 |- up 12
+# orbit 0 # hpf 60
+
+p "hats" $ density 2 $ n "0 [~ 0]*2" # s "scw-nasty" + n (irand 16)
+# gain 1 # pan "0.3 0.7" # lpf 800
+
+p "hats"
+$ every 4 (density "<2 1> [3 1]")
+$ s "scw-two:2*16" |+ (irand 34)
+# pan slowertri # hpf 800
+
+d2
+-- $ every 3 (# crush ("2 0 1 0" *| 0.4))
+-- $ s "pulse*<8 [16 8]>?" # up "<0 3 5 7>"
+-- $ s "[pulse, jukeit:2]*<8 [16 2 4 2]>"
+$ s "[pulse, jukeit:2]*<8>"
+-- $ s "[jukeit:2]*<8 [16 4 2 2]>?"
+-- $ s "[abstrakta:7(5,16), scw-one:4*<16 16 16 [32 16]>?]"
+-- # room (slowersaw) |- room 0.4 # orbit 2
+# delay 0.5 # delaytime (slowersaw * 0.125) # orbit 2
+-- # end (slowersaw * 0.25)
+-- # end ((1/8)*1.5) # hpf 100
+
+p "vox"
+$ gap (choose [8, 16, 32, 16])
+-- $ striate "[1 2 [8 4] [8 2]]/4"
+$ whenmod 8 3 (chop "<1 2 4>") -- robot voice
+-- $ slice64 "[8..11]*<1 2 4>"
+$ s "repetition:4*4" # legato 1 # bpf 2000 # gain 1.6
+# begin 0.12 # end 0.212 -- limit to RAVE
+-- # begin 0.200 # end 0.412 -- limit to Generation
+-- # delay 0.5 # delaytime (slowersaw * 0.25) # orbit 2
+-- # delay 0.5 # delaytime ("[5 6]/4"/8) # orbit 2
+-- # room slowersaw |- room 0.4 # orbit 2 # size 0.5
+# pan slowtri
+
+setcps (100/60/4)

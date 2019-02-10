@@ -1,0 +1,51 @@
+p "chords" -- Foot chords
+$ often ((# delay 0.3) . (# delaytime (choose[(1/16), (1/32)])) . (# delayfeedback 0.8))
+$ n "[0 [~ 0]*2 [~ 0] 0]*2" |+ n 3 # s "[hits]" # cut 1
+# up "[0 3 4 7]/[8 16 12]/4"
+
+d1 $ stack [
+  s "[feel:0*4, 808:2*8, 808:1*<16  16  16 [32 16]>, [~ 808:4]*4]"
+]
+
+-------------------
+setcps(130/120/2)
+
+
+p "tweaks"
+$ often ((# delay 0.3) . (# delaytime (choose[(1/16), (1/32)])) . (# delayfeedback 0.8))
+$ sound "[jukeit:11(4,6)]*2?"
+  # n (irand 8)
+  # up (scale "pent" "0 .. 7") # legato 1
+
+p "bass" $ s "subs:2(6,16)"
+  # cut 1 # lpf (range 300 800 $ slowertri) # lpq 0.3
+  # up (slow 8 (palindrome (linger 0.5 (scale "aeolian" "0 .. 7"))))
+
+d4 $ s "devinekick:10(<6 7 5>,16)?"
+
+d1
+  $ sometimes ((# room 0.3) . (# size 0.4))
+  $ often ((# delay 0.3) . (# delaytime (choose[(1/16), (1/32)])) . (# delayfeedback 0.8))
+  $ every 4 (slow 3)
+  $ every 8 (slow 2)
+  $ every 6 (slow 6)
+  $ slow 4
+  -- $ n (run 32)
+  $ n "0*32?" |+ n (irand 32) # up (irand 24)
+  # s "east" # legato 1 # lpf 3000
+
+-- Juked it
+d1
+$ push4
+$ s "[waxdoc:3(<3 5>,8), ~ [imperial:2*2], ~ conant:1]" # hpf 100
+
+p "claps" $ s "[jukeit(4,6)]*2?"
+  -- # n (irand 8)
+  # up (scale "pent" "0 .. 7") # legato 1
+
+p "bass" $ s "subs:2(3,8)"
+  # cut 1
+  # up (slow 8 (palindrome (linger 0.5 (scale "aeolian" "0 .. 7"))))
+
+p "chords" $ s "aye:5(5,8)"
+    # legato 5 # bpf (range 600 2000 (slowersine)) # resonance 0.4

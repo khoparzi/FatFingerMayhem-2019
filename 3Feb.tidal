@@ -1,0 +1,30 @@
+d1 $ s "dirac*<8 16 32>?/4" # accelrate "[0 -0.2 0.5 2]/4" # pan (slowtri) - up 8 # decay 0.5
+
+p "tweaks"
+-- $ rarely (stut 14 (slowtri - 0.5) (1/32))
+$ s "fex(<6 5>,16)"
+-- $ s "fex(6,16)"
+# legato 1 # n 97 # hpf 200
+# up "[0, 3, 7, 9]"
+
+p "vox"
+-- $ striate "128 512"
+$ density 2 $ n "0 [~ 0]*2" # s "acid" + n (irand 16)
+# gain 1.2 # pan "0.3 0.7" # bpf 4000
+
+p "chords"
+$ every 3 ((+ up 3))
+$ s "calizones" # up 3 # hpf 1000 <| n "0(6,16)"
+
+d1 $ stack [
+ n "6*<8 16 [8 12]>?",
+ n "4(<5 6>,16)", -- kick
+ sometimes ((trunc (choose[0.1, 0.2, 0.3])) . (density 16)) $
+ n "1", -- snr
+ n "2(6,16)" -- hats
+]
+# s "jukeit" # end (slowsaw * 0.5)
+
+clutchIn "vox" 4 $ silence
+
+setcps(150/120/2)
